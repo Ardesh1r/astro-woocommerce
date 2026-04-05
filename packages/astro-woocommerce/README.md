@@ -203,6 +203,31 @@ try {
 }
 ```
 
+## Real-World Example
+
+This integration is used in production on [ardeshirshojaei.com](https://ardeshirshojaei.com). Here's what it fetches:
+
+```
+📦 Products from ardeshirshojaei.com:
+
+• n8n Nodes You Cannot Live Without
+  Price: £364
+  Category: Books
+  Image: https://cms.ardeshirshojaei.com/wp-content/uploads/2026/03/n8n-nodes-you-cannot-live-without.jpg
+
+• Python Cheat Sheet
+  Price: £399
+  Category: Books
+  Image: https://cms.ardeshirshojaei.com/wp-content/uploads/2026/03/Python-cheatsheet-book.jpg
+
+• Excel Cheat Sheet
+  Price: £308
+  Category: Books
+  Image: https://cms.ardeshirshojaei.com/wp-content/uploads/2026/03/Excel-Cheatsheet-book.jpg
+```
+
+All product data is fetched dynamically using `astro-woocommerce` with full TypeScript type safety.
+
 ## Examples
 
 ### Display a product grid

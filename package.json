@@ -1,5 +1,5 @@
 {
-  "name": "astro-woocommerce-monorepo",
+  "name": "astro-woocommerce",
   "version": "1.0.0",
   "private": true,
   "description": "Astro integration for WooCommerce headless commerce",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "astro": "^4.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.3.0"
   }
 }

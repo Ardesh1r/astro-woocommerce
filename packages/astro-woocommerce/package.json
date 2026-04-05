@@ -1,5 +1,5 @@
 {
-  "name": "@ardeshir/astro-woocommerce",
+  "name": "astro-woocommerce",
   "version": "1.0.0",
   "description": "Astro integration for WooCommerce headless e-commerce",
   "type": "module",
