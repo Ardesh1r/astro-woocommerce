@@ -1,4 +1,4 @@
-# astro-woocommerce
+# Astro Woocommerce
 
 A powerful, type-safe Astro integration for building headless e-commerce sites with WooCommerce.
 
