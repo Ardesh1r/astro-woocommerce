@@ -1,0 +1,102 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+
+const storeUrl = import.meta.env.PUBLIC_WOOCOMMERCE_STORE_URL
+const consumerKey = import.meta.env.WOOCOMMERCE_CONSUMER_KEY
+const consumerSecret = import.meta.env.WOOCOMMERCE_CONSUMER_SECRET
+
+export async function getStaticPaths() {
+  if (!storeUrl) {
+    return []
+  }
+
+  try {
+    const woocommerce = createWooCommerceClient({
+      storeUrl,
+      consumerKey,
+      consumerSecret,
+    })
+
+    const products = await woocommerce.getProducts({ per_page: 100 })
+    return products.map(product => ({
+      params: { slug: product.slug },
+      props: { product },
+    }))
+  } catch {
+    return []
+  }
+}
+
+interface Props {
+  product: any
+}
+
+const { product } = Astro.props
+
+if (!product) {
+  return Astro.redirect('/products')
+}
+---
+
+<Layout title={product.name} description={product.short_description}>
+  <div style="max-width: 800px; margin: 0 auto;">
+    {product.images && product.images[0] && (
+      <img
+        src={product.images[0].src}
+        alt={product.name}
+        style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 30px;"
+      />
+    )}
+
+    <h1>{product.name}</h1>
+
+    <div style="font-size: 1.5rem; color: #2563eb; font-weight: bold; margin: 20px 0;">
+      {product.prices?.currency_symbol}{product.prices?.price}
+    </div>
+
+    {product.short_description && (
+      <p style="font-size: 1.1rem; margin-bottom: 20px;">{product.short_description}</p>
+    )}
+
+    {product.description && (
+      <div style="margin-bottom: 30px; line-height: 1.8;">
+        <h2>Description</h2>
+        <div set:html={product.description} />
+      </div>
+    )}
+
+    {product.add_to_cart && (
+      <a
+        href={product.add_to_cart.url}
+        style="display: inline-block; background: #2563eb; color: white; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-weight: 600; margin-bottom: 30px;"
+      >
+        {product.add_to_cart.text}
+      </a>
+    )}
+
+    <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin-top: 30px;">
+      <h3>Product Details</h3>
+      <ul style="list-style: none; margin-top: 15px;">
+        <li>
+          <strong>SKU:</strong>
+          {product.sku || 'N/A'}
+        </li>
+        <li>
+          <strong>Stock:</strong>
+          {product.stock_status === 'instock' ? '✓ In Stock' : 'Out of Stock'}
+        </li>
+        {product.categories && product.categories.length > 0 && (
+          <li>
+            <strong>Categories:</strong>
+            {product.categories.map((cat: any) => cat.name).join(', ')}
+          </li>
+        )}
+      </ul>
+    </div>
+
+    <a href="/products" style="display: inline-block; margin-top: 30px; color: #2563eb; text-decoration: none;">
+      ← Back to Products
+    </a>
+  </div>
+</Layout>

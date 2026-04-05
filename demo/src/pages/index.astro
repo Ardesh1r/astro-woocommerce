@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+
+const storeUrl = import.meta.env.PUBLIC_WOOCOMMERCE_STORE_URL
+const consumerKey = import.meta.env.WOOCOMMERCE_CONSUMER_KEY
+const consumerSecret = import.meta.env.WOOCOMMERCE_CONSUMER_SECRET
+
+let products = []
+let error = null
+
+if (!storeUrl) {
+  error = 'PUBLIC_WOOCOMMERCE_STORE_URL is not configured. Please set it in your .env file.'
+} else {
+  try {
+    const woocommerce = createWooCommerceClient({
+      storeUrl,
+      consumerKey,
+      consumerSecret,
+    })
+
+    products = await woocommerce.getProducts({ per_page: 12 })
+  } catch (err) {
+    error = `Failed to fetch products: ${err instanceof Error ? err.message : 'Unknown error'}`
+  }
+}
+---
+
+<Layout title="Products" description="Browse our product catalog">
+  {error && <div class="error">{error}</div>}
+
+  {products.length > 0 ? (
+    <div class="grid">
+      {products.map(product => (
+        <a href={`/products/${product.slug}`} class="product-card">
+          <div class="product-image">
+            {product.images && product.images[0] ? (
+              <img src={product.images[0].src} alt={product.name} />
+            ) : (
+              <div style="color: #999;">No image</div>
+            )}
+          </div>
+          <div class="product-info">
+            <div class="product-name">{product.name}</div>
+            <div class="product-price">{product.prices?.currency_symbol}{product.prices?.price}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  ) : (
+    !error && <p>No products found.</p>
+  )}
+</Layout>
