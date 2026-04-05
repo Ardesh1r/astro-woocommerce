@@ -2,7 +2,7 @@
 
 A powerful, type-safe Astro integration for building headless e-commerce sites with WooCommerce.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 npm install @ardeshir/astro-woocommerce
