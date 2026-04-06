@@ -205,28 +205,42 @@ try {
 
 ## Real-World Example
 
-This integration is used in production on [ardeshirshojaei.com](https://ardeshirshojaei.com). Here's what it fetches:
+Used in production on [ardeshirshojaei.com](https://ardeshirshojaei.com) to power a headless e-commerce store.
 
+**Product Page Implementation:**
+
+```astro
+---
+import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+
+const woocommerce = createWooCommerceClient({
+  storeUrl: 'https://cms.ardeshirshojaei.com',
+})
+
+const products = await woocommerce.getProducts({ per_page: 3 })
+---
+
+<div class="products-grid">
+  {products.map(product => (
+    <div class="product-card">
+      <img src={product.images[0]?.src} alt={product.name} />
+      <h3>{product.name}</h3>
+      <p class="price">{product.prices?.currency_symbol}{product.prices?.price}</p>
+      <p class="category">{product.categories[0]?.name}</p>
+    </div>
+  ))}
+</div>
 ```
-📦 Products from ardeshirshojaei.com:
 
-• n8n Nodes You Cannot Live Without
-  Price: £364
-  Category: Books
-  Image: https://cms.ardeshirshojaei.com/wp-content/uploads/2026/03/n8n-nodes-you-cannot-live-without.jpg
+**Live Output:**
 
-• Python Cheat Sheet
-  Price: £399
-  Category: Books
-  Image: https://cms.ardeshirshojaei.com/wp-content/uploads/2026/03/Python-cheatsheet-book.jpg
+| Product | Price | Category |
+|---------|-------|----------|
+| n8n Nodes You Cannot Live Without | £364 | Books |
+| Python Cheat Sheet | £399 | Books |
+| Excel Cheat Sheet | £308 | Books |
 
-• Excel Cheat Sheet
-  Price: £308
-  Category: Books
-  Image: https://cms.ardeshirshojaei.com/wp-content/uploads/2026/03/Excel-Cheatsheet-book.jpg
-```
-
-All product data is fetched dynamically using `astro-woocommerce` with full TypeScript type safety.
+All data fetched dynamically with full TypeScript type safety.
 
 ## Examples
 
