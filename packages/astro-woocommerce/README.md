@@ -1,5 +1,8 @@
 # astro-woocommerce
 
+[![npm version](https://img.shields.io/npm/v/astro-woocommerce.svg)](https://www.npmjs.com/package/astro-woocommerce)
+[![npm downloads](https://img.shields.io/npm/dw/astro-woocommerce.svg)](https://www.npmjs.com/package/astro-woocommerce)
+
 A powerful, type-safe Astro integration for building headless e-commerce sites with WooCommerce.
 
 ## Features
