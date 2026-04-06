@@ -203,21 +203,19 @@ try {
 }
 ```
 
-## Real-World Example
+## Example Usage
 
-Used in production on [ardeshirshojaei.com](https://ardeshirshojaei.com) to power a headless e-commerce store.
-
-**Product Page Implementation:**
+**Product Page Component:**
 
 ```astro
 ---
 import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
 
 const woocommerce = createWooCommerceClient({
-  storeUrl: 'https://cms.ardeshirshojaei.com',
+  storeUrl: 'https://your-store.com',
 })
 
-const products = await woocommerce.getProducts({ per_page: 3 })
+const products = await woocommerce.getProducts({ per_page: 12 })
 ---
 
 <div class="products-grid">
@@ -231,14 +229,6 @@ const products = await woocommerce.getProducts({ per_page: 3 })
   ))}
 </div>
 ```
-
-**Live Output:**
-
-| Product | Price | Category |
-|---------|-------|----------|
-| n8n Nodes You Cannot Live Without | £364 | Books |
-| Python Cheat Sheet | £399 | Books |
-| Excel Cheat Sheet | £308 | Books |
 
 All data fetched dynamically with full TypeScript type safety.
 

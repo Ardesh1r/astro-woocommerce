@@ -10,16 +10,9 @@ npm install @ardeshir/astro-woocommerce
 
 See [`packages/astro-woocommerce/README.md`](./packages/astro-woocommerce/README.md) for full documentation.
 
-## 🎯 Real-World Usage
+## 🎯 Production Ready
 
-This integration is actively used in production on [ardeshirshojaei.com](https://ardeshirshojaei.com) to power a headless e-commerce store with WooCommerce backend and Astro frontend.
-
-**Live Example Products:**
-- n8n Nodes You Cannot Live Without (£364)
-- Python Cheat Sheet (£399)
-- Excel Cheat Sheet (£308)
-
-All fetched dynamically with full TypeScript type safety.
+This integration is designed for production use with any WooCommerce store. It provides type-safe access to products, categories, and cart operations with full TypeScript support.
 
 ## 📁 Project Structure
 
