@@ -1,6 +1,6 @@
 {
   "name": "astro-woocommerce",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Astro integration for WooCommerce headless e-commerce",
   "type": "module",
   "main": "./dist/index.js",
