@@ -5,7 +5,7 @@ A powerful, type-safe Astro integration for building headless e-commerce sites w
 ## Quick Start
 
 ```bash
-npm install @ardeshir/astro-woocommerce
+npm install astro-woocommerce
 ```
 
 See [`packages/astro-woocommerce/README.md`](./packages/astro-woocommerce/README.md) for full documentation.

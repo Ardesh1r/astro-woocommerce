@@ -1,4 +1,4 @@
-# @ardeshir/astro-woocommerce
+# astro-woocommerce
 
 A powerful, type-safe Astro integration for building headless e-commerce sites with WooCommerce.
 
@@ -14,7 +14,7 @@ A powerful, type-safe Astro integration for building headless e-commerce sites w
 ## Installation
 
 ```bash
-npm install @ardeshir/astro-woocommerce
+npm install astro-woocommerce
 ```
 
 ## Quick Start
@@ -32,7 +32,7 @@ WOOCOMMERCE_CONSUMER_SECRET=your_consumer_secret
 ### 2. Create a client instance
 
 ```typescript
-import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+import { createWooCommerceClient } from 'astro-woocommerce'
 
 const woocommerce = createWooCommerceClient({
   storeUrl: import.meta.env.PUBLIC_WOOCOMMERCE_STORE_URL,
@@ -45,7 +45,7 @@ const woocommerce = createWooCommerceClient({
 
 ```astro
 ---
-import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+import { createWooCommerceClient } from 'astro-woocommerce'
 
 const woocommerce = createWooCommerceClient({
   storeUrl: import.meta.env.PUBLIC_WOOCOMMERCE_STORE_URL,
@@ -184,7 +184,7 @@ const products = await woocommerce.getProductsByCategory(42, { per_page: 20 })
 All responses are fully typed:
 
 ```typescript
-import type { Product, ProductCategory } from '@ardeshir/astro-woocommerce'
+import type { Product, ProductCategory } from 'astro-woocommerce'
 
 const product: Product = await woocommerce.getProduct('my-product')
 const category: ProductCategory = await woocommerce.getCategory('coffee')
@@ -209,7 +209,7 @@ try {
 
 ```astro
 ---
-import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+import { createWooCommerceClient } from 'astro-woocommerce'
 
 const woocommerce = createWooCommerceClient({
   storeUrl: 'https://your-store.com',
@@ -238,7 +238,7 @@ All data fetched dynamically with full TypeScript type safety.
 
 ```astro
 ---
-import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+import { createWooCommerceClient } from 'astro-woocommerce'
 
 const woocommerce = createWooCommerceClient({
   storeUrl: import.meta.env.PUBLIC_WOOCOMMERCE_STORE_URL,
@@ -268,7 +268,7 @@ const products = await woocommerce.getProducts({ per_page: 12 })
 
 ```astro
 ---
-import { createWooCommerceClient } from '@ardeshir/astro-woocommerce'
+import { createWooCommerceClient } from 'astro-woocommerce'
 
 const woocommerce = createWooCommerceClient({
   storeUrl: import.meta.env.PUBLIC_WOOCOMMERCE_STORE_URL,
