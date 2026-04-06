@@ -1,7 +1,7 @@
 {
   "name": "astro-woocommerce",
-  "version": "1.0.1",
-  "description": "Astro integration for WooCommerce headless e-commerce",
+  "version": "1.0.2",
+  "description": "Type-safe WooCommerce integration for Astro. Fetch products, categories, and manage cart state with full TypeScript support. Perfect for building fast, headless e-commerce sites with Astro.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -26,11 +26,14 @@
   "keywords": [
     "astro",
     "astro-integration",
+    "withastro",
     "woocommerce",
     "headless",
     "e-commerce",
     "commerce",
-    "withastro"
+    "typescript",
+    "api",
+    "rest"
   ],
   "homepage": "https://github.com/ardeshir/astro-woocommerce",
   "repository": {
