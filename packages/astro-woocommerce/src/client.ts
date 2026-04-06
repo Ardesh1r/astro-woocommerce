@@ -58,6 +58,31 @@ export class WooCommerceClient {
     return response.json() as Promise<T>
   }
 
+  private formatProduct(product: any): Product {
+    // WooCommerce Store API returns prices in smallest currency unit
+    // Use currency_minor_unit to convert (e.g., 2 for GBP means divide by 100)
+    const divisor = Math.pow(10, product.prices?.currency_minor_unit || 2)
+    
+    const formatPrice = (price: string | number | null) => {
+      if (!price) return null
+      const num = typeof price === 'string' ? parseInt(price, 10) : price
+      return (num / divisor).toFixed(2)
+    }
+
+    return {
+      ...product,
+      price: formatPrice(product.prices?.price),
+      regular_price: formatPrice(product.prices?.regular_price),
+      sale_price: formatPrice(product.prices?.sale_price),
+      prices: {
+        price: formatPrice(product.prices?.price),
+        regular_price: formatPrice(product.prices?.regular_price),
+        sale_price: formatPrice(product.prices?.sale_price),
+        currency_symbol: product.prices?.currency_symbol || '£',
+      },
+    }
+  }
+
   async getProducts(params?: FilterParams): Promise<Product[]> {
     const queryParams = new URLSearchParams()
 
@@ -70,20 +95,18 @@ export class WooCommerceClient {
     if (params?.category) queryParams.append('category', params.category.toString())
     if (params?.tag) queryParams.append('tag', params.tag.toString())
     if (params?.on_sale) queryParams.append('on_sale', 'true')
-    if (params?.min_price) queryParams.append('min_price', params.min_price.toString())
-    if (params?.max_price) queryParams.append('max_price', params.max_price.toString())
+    if (params?.min_price !== undefined) queryParams.append('min_price', params.min_price.toString())
+    if (params?.max_price !== undefined) queryParams.append('max_price', params.max_price.toString())
     if (params?.stock_status) queryParams.append('stock_status', params.stock_status)
 
-    const query = queryParams.toString()
-    const endpoint = `/products${query ? `?${query}` : ''}`
-
-    return this.request<Product[]>(endpoint)
+    const products = await this.request<any[]>(`/products?${queryParams}`)
+    return (products || []).map(p => this.formatProduct(p))
   }
 
   async getProduct(slug: string): Promise<Product | null> {
     try {
-      const products = await this.request<Product[]>(`/products?slug=${slug}`)
-      return products[0] || null
+      const products = await this.request<any[]>(`/products?slug=${slug}`)
+      return products[0] ? this.formatProduct(products[0]) : null
     } catch {
       return null
     }
@@ -91,7 +114,8 @@ export class WooCommerceClient {
 
   async getProductById(id: number): Promise<Product | null> {
     try {
-      return await this.request<Product>(`/products/${id}`)
+      const product = await this.request<any>(`/products/${id}`)
+      return this.formatProduct(product)
     } catch {
       return null
     }
