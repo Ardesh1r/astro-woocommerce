@@ -10,7 +10,7 @@ npm install astro-woocommerce
 
 See [`packages/astro-woocommerce/README.md`](./packages/astro-woocommerce/README.md) for full documentation.
 
-## 🎯 Production Ready
+## Production Ready
 
 This integration is designed for production use with any WooCommerce store. It provides type-safe access to products, categories, and cart operations with full TypeScript support.
 
@@ -59,7 +59,7 @@ cp .env.example .env
 npm run dev
 ```
 
-## 📦 Publishing
+## Publishing
 
 ```bash
 # Build the package
@@ -72,13 +72,13 @@ npm publish
 
 ## 📝 Features
 
-- ✅ Full TypeScript support
-- ✅ Type-safe WooCommerce API client
-- ✅ Product fetching with filtering & pagination
-- ✅ Category management
-- ✅ Search functionality
-- ✅ Error handling
-- ✅ Zero external dependencies
+- Full TypeScript support
+- Type-safe WooCommerce API client
+- Product fetching with filtering & pagination
+- Category management
+- Search functionality
+- Error handling
+- Zero external dependencies
 
 ## 📄 License
 

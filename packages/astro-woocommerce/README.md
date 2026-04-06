@@ -7,12 +7,12 @@ A powerful, type-safe Astro integration for building headless e-commerce sites w
 
 ## Features
 
-- 🚀 **Type-Safe**: Full TypeScript support with comprehensive type definitions
-- 📦 **Lightweight**: Minimal dependencies, optimized for performance
-- 🔄 **REST API**: Uses WooCommerce Store REST API for fast, reliable data fetching
-- 🎯 **Developer-Friendly**: Simple, intuitive API for common e-commerce operations
-- 🔐 **Secure**: Support for API key authentication
-- 📱 **Flexible**: Works with any Astro project structure
+- **Type-Safe**: Full TypeScript support with comprehensive type definitions
+- **Lightweight**: Minimal dependencies, optimized for performance
+- **REST API**: Uses WooCommerce Store REST API for fast, reliable data fetching
+- **Developer-Friendly**: Simple, intuitive API for common e-commerce operations
+- **Secure**: Support for API key authentication
+- **Flexible**: Works with any Astro project structure
 
 ## Installation
 
