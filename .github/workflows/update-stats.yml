@@ -1,0 +1,76 @@
+name: Update Stats
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch npm and GitHub stats
+        id: stats
+        run: |
+          # Fetch npm downloads (last week)
+          NPM_DOWNLOADS=$(curl -s https://api.npmjs.org/downloads/point/last-week/astro-woocommerce | jq -r '.downloads')
+          
+          # Fetch GitHub stats
+          GITHUB_RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/Ardesh1r/astro-woocommerce)
+          
+          STARS=$(echo $GITHUB_RESPONSE | jq -r '.stargazers_count')
+          FORKS=$(echo $GITHUB_RESPONSE | jq -r '.forks_count')
+          WATCHERS=$(echo $GITHUB_RESPONSE | jq -r '.watchers_count')
+          
+          # Set outputs
+          echo "npm_downloads=$NPM_DOWNLOADS" >> $GITHUB_OUTPUT
+          echo "stars=$STARS" >> $GITHUB_OUTPUT
+          echo "forks=$FORKS" >> $GITHUB_OUTPUT
+          echo "watchers=$WATCHERS" >> $GITHUB_OUTPUT
+
+      - name: Update README with stats
+        run: |
+          # Read the current README
+          README_FILE="packages/astro-woocommerce/README.md"
+          
+          # Create stats section
+          STATS_SECTION="## Stats
+
+| Metric | Count |
+|--------|-------|
+| npm Downloads (weekly) | ${{ steps.stats.outputs.npm_downloads }} |
+| GitHub Stars | ${{ steps.stats.outputs.stars }} |
+| GitHub Forks | ${{ steps.stats.outputs.forks }} |
+| GitHub Watchers | ${{ steps.stats.outputs.watchers }} |
+
+"
+          
+          # Check if stats section exists
+          if grep -q "## Stats" "$README_FILE"; then
+            # Replace existing stats section
+            sed -i '/## Stats/,/^$/d' "$README_FILE"
+          fi
+          
+          # Insert stats after the badges section (after line 4)
+          sed -i '4a\
+          \
+          '"$STATS_SECTION"'' "$README_FILE"
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git add packages/astro-woocommerce/README.md
+            git commit -m "chore: update stats"
+            git push
+          fi
