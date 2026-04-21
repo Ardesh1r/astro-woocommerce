@@ -4,12 +4,11 @@ A powerful, type-safe Astro integration for building headless e-commerce sites w
 
 ## Stats
 
-| Metric | Count |
-|--------|-------|
-| npm Downloads (weekly) | — |
-| GitHub Stars | — |
-| GitHub Forks | — |
-| GitHub Watchers | — |
+[![npm version](https://img.shields.io/npm/v/astro-woocommerce.svg?style=flat-square)](https://www.npmjs.com/package/astro-woocommerce)
+[![npm downloads](https://img.shields.io/npm/dw/astro-woocommerce.svg?style=flat-square&label=npm%20downloads)](https://www.npmjs.com/package/astro-woocommerce)
+[![GitHub stars](https://img.shields.io/github/stars/Ardesh1r/astro-woocommerce.svg?style=flat-square)](https://github.com/Ardesh1r/astro-woocommerce)
+[![GitHub forks](https://img.shields.io/github/forks/Ardesh1r/astro-woocommerce.svg?style=flat-square)](https://github.com/Ardesh1r/astro-woocommerce)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
 ## Quick Start
 

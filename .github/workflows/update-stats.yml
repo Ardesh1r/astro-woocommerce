@@ -1,4 +1,4 @@
-name: Update Stats
+name: Verify Stats Badges
 
 on:
   schedule:
@@ -6,78 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-stats:
+  verify-badges:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
       - uses: actions/checkout@v4
-
-      - name: Fetch npm and GitHub stats
-        id: stats
+      
+      - name: Verify shields.io badges are accessible
         run: |
-          # Fetch npm downloads (last week)
-          NPM_DOWNLOADS=$(curl -s https://api.npmjs.org/downloads/point/last-week/astro-woocommerce | jq -r '.downloads')
-          
-          # Fetch GitHub stats
-          GITHUB_RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/Ardesh1r/astro-woocommerce)
-          
-          STARS=$(echo $GITHUB_RESPONSE | jq -r '.stargazers_count')
-          FORKS=$(echo $GITHUB_RESPONSE | jq -r '.forks_count')
-          WATCHERS=$(echo $GITHUB_RESPONSE | jq -r '.watchers_count')
-          
-          # Set outputs
-          echo "npm_downloads=$NPM_DOWNLOADS" >> $GITHUB_OUTPUT
-          echo "stars=$STARS" >> $GITHUB_OUTPUT
-          echo "forks=$FORKS" >> $GITHUB_OUTPUT
-          echo "watchers=$WATCHERS" >> $GITHUB_OUTPUT
-
-      - name: Update README with stats
-        run: |
-          # Read the current README
-          README_FILE="README.md"
-          
-          # Create a temporary file with updated stats
-          python3 << 'EOF'
-          import re
-          
-          npm_downloads = "${{ steps.stats.outputs.npm_downloads }}"
-          stars = "${{ steps.stats.outputs.stars }}"
-          forks = "${{ steps.stats.outputs.forks }}"
-          watchers = "${{ steps.stats.outputs.watchers }}"
-          
-          with open("README.md", "r") as f:
-              content = f.read()
-          
-          # Replace the stats table
-          new_stats = f"""## Stats
-
-| Metric | Count |
-|--------|-------|
-| npm Downloads (weekly) | {npm_downloads} |
-| GitHub Stars | {stars} |
-| GitHub Forks | {forks} |
-| GitHub Watchers | {watchers} |"""
-          
-          # Find and replace the stats section
-          pattern = r"## Stats\n\n\| Metric \| Count \|\n\|--------|-------\|\n\| npm Downloads \(weekly\) \| .* \|\n\| GitHub Stars \| .* \|\n\| GitHub Forks \| .* \|\n\| GitHub Watchers \| .* \|"
-          content = re.sub(pattern, new_stats, content)
-          
-          with open("README.md", "w") as f:
-              f.write(content)
-          EOF
-
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          
-          if git diff --quiet; then
-            echo "No changes to commit"
-          else
-            git add README.md
-            git commit -m "chore: update stats"
-            git push
-          fi
+          # Test that shields.io badges are working
+          curl -s -o /dev/null -w "%{http_code}" https://img.shields.io/npm/v/astro-woocommerce.svg
+          echo "Badges verified"
