@@ -2,6 +2,15 @@
 
 A powerful, type-safe Astro integration for building headless e-commerce sites with WooCommerce.
 
+## Stats
+
+| Metric | Count |
+|--------|-------|
+| npm Downloads (weekly) | — |
+| GitHub Stars | — |
+| GitHub Forks | — |
+| GitHub Watchers | — |
+
 ## Quick Start
 
 ```bash

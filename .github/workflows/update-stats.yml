@@ -37,30 +37,37 @@ jobs:
       - name: Update README with stats
         run: |
           # Read the current README
-          README_FILE="packages/astro-woocommerce/README.md"
+          README_FILE="README.md"
           
-          # Create stats section
-          STATS_SECTION="## Stats
+          # Create a temporary file with updated stats
+          python3 << 'EOF'
+          import re
+          
+          npm_downloads = "${{ steps.stats.outputs.npm_downloads }}"
+          stars = "${{ steps.stats.outputs.stars }}"
+          forks = "${{ steps.stats.outputs.forks }}"
+          watchers = "${{ steps.stats.outputs.watchers }}"
+          
+          with open("README.md", "r") as f:
+              content = f.read()
+          
+          # Replace the stats table
+          new_stats = f"""## Stats
 
 | Metric | Count |
 |--------|-------|
-| npm Downloads (weekly) | ${{ steps.stats.outputs.npm_downloads }} |
-| GitHub Stars | ${{ steps.stats.outputs.stars }} |
-| GitHub Forks | ${{ steps.stats.outputs.forks }} |
-| GitHub Watchers | ${{ steps.stats.outputs.watchers }} |
-
-"
+| npm Downloads (weekly) | {npm_downloads} |
+| GitHub Stars | {stars} |
+| GitHub Forks | {forks} |
+| GitHub Watchers | {watchers} |"""
           
-          # Check if stats section exists
-          if grep -q "## Stats" "$README_FILE"; then
-            # Replace existing stats section
-            sed -i '/## Stats/,/^$/d' "$README_FILE"
-          fi
+          # Find and replace the stats section
+          pattern = r"## Stats\n\n\| Metric \| Count \|\n\|--------|-------\|\n\| npm Downloads \(weekly\) \| .* \|\n\| GitHub Stars \| .* \|\n\| GitHub Forks \| .* \|\n\| GitHub Watchers \| .* \|"
+          content = re.sub(pattern, new_stats, content)
           
-          # Insert stats after the badges section (after line 4)
-          sed -i '4a\
-          \
-          '"$STATS_SECTION"'' "$README_FILE"
+          with open("README.md", "w") as f:
+              f.write(content)
+          EOF
 
       - name: Commit and push changes
         run: |
@@ -70,7 +77,7 @@ jobs:
           if git diff --quiet; then
             echo "No changes to commit"
           else
-            git add packages/astro-woocommerce/README.md
+            git add README.md
             git commit -m "chore: update stats"
             git push
           fi
