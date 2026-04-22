@@ -1,6 +1,6 @@
 {
   "name": "astro-woocommerce",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Type-safe WooCommerce integration for Astro. Fetch products, categories, and manage cart state with full TypeScript support. Perfect for building fast, headless e-commerce sites with Astro.",
   "type": "module",
   "main": "./dist/index.js",
