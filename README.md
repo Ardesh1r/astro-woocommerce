@@ -98,4 +98,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📧 Support
 
-For issues and questions, please open a GitHub issue.
+For issues and questions, please open a GitHub issue, or contact me on my website: https://ardeshirshojaei.com
