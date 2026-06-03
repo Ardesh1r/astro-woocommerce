@@ -92,7 +92,7 @@ npm publish
 
 MIT
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
